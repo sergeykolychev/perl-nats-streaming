@@ -15,10 +15,7 @@ $client->publish_stream({ subject => 'foo', data => 'Hello, World!'});
 
 $subscription = $client->subscribe_stream(
     { subject => 'foo' }, 
-    sub {
-        my ($message) = @_;
-       printf("Received a message: %s\n", $message->data);
-    })
+    sub { warn shift->data }
 );
 
 $client->unsubscribe_stream($subscription);
