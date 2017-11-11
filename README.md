@@ -1,9 +1,5 @@
 
-NAME
-
 Net::NATS::Streaming::Client - A Perl client for the NATS Streaming messaging system.
-
-SYNOPSIS
 
 #
 # Basic Usage
@@ -12,6 +8,7 @@ This class is a subclass of Net::NATS::Client and delegates all networking
 to the parent.
  
 $client = Net::NATS::Streaming::Client->new(uri => 'nats://localhost:4222', cluster_name => 'test-cluster');
+
 $client->connect() or die $!;
  
 # Simple Publisher
@@ -29,9 +26,7 @@ $client->unsubscribe_stream($subscription);
 # Close stream
 $client->close_stream();
 
-
 # SEE ALSO
-
 https://github.com/carwynmoore/perl-nats Net::NATS::Client
 
 # AUTHOR
