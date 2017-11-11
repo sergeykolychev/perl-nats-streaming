@@ -28,15 +28,13 @@ $client->unsubscribe_stream($subscription);
  
 # Close stream
 $client->close_stream();
-REPOSITORY
 
-https://github.com/sergeykolychev/perl-nats-streaming
 
-SEE ALSO
+# SEE ALSO
 
 https://github.com/carwynmoore/perl-nats Net::NATS::Client
 
-AUTHOR
+# AUTHOR
 
 Sergey Kolychev, <sergeykolychev.github@gmail.com>
 COPYRIGHT & LICENSE
