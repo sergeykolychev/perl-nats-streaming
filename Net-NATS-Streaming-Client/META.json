@@ -32,7 +32,7 @@
          "requires" : {
             "Net::NATS::Streaming::PB" : "0.01",
             "Net::NATS::Client" : "0.2.0",
-            "OSSP::uuid" : "1.0602",
+            "UUID" : "0.05",
             "Class::XSAccessor" : "1.19"
          }
       },
@@ -41,5 +41,5 @@
       }
    },
    "release_status" : "stable",
-   "version" : "0.01"
+   "version" : "0.02"
 }
