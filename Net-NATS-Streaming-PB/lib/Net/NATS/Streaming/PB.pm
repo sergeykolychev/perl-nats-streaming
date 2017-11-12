@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use vars qw(@ISA $AUTOLOAD $VERSION);
 
-$VERSION = '0.01';
+$VERSION = '0.02';
 
 use Exporter;
 
