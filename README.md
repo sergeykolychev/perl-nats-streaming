@@ -8,21 +8,19 @@ This class is a subclass of Net::NATS::Client and delegates all networking
 to the parent.
 
 use Net::NATS::Streaming::Client;
- 
-$client = Net::NATS::Streaming::Client->new(uri => 'nats://localhost:4222', cluster_name => 'test-cluster');
+
+$client = Net::NATS::Streaming::Client->new(uri => 'nats://localhost:4222');
 
 $client->connect() or die $!;
 
-$subscription = $client->subscribe_stream(
-    { subject => 'foo' }, 
+$subscription = $client->subscribe_channel(
+    { subject => 'foo' },
     sub { warn shift->data }
 );
 
-$client->publish_stream({ subject => 'foo', data => 'Hello, World!'});
+$client->publish_channel({ subject => 'foo', data => 'Hello, World!'});
 
-$client->wait_for_op;
-
-$client->unsubscribe_stream($subscription);
+$client->unsubscribe_channel($subscription);
 
 $client->close_stream();
 
