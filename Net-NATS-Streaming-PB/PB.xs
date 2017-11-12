@@ -24,49 +24,6 @@ extern "C" {
 
 using namespace std;
 
-class nats_streaming_OutputStream :
-  public google::protobuf::io::ZeroCopyOutputStream {
-public:
-  explicit nats_streaming_OutputStream(SV * sv) :
-  sv_(sv), len_(0) {}
-  ~nats_streaming_OutputStream() {}
-
-  bool Next(void** data, int* size)
-  {
-    STRLEN nlen = len_ << 1;
-
-    if ( nlen < 16 ) nlen = 16;
-    SvGROW(sv_, nlen);
-    *data = SvEND(sv_) + len_;
-    *size = SvLEN(sv_) - len_;
-    len_ = nlen;
-
-    return true;
-  }
-
-  void BackUp(int count)
-  {
-    SvCUR_set(sv_, SvLEN(sv_) - count);
-  }
-
-  void Sync() {
-    if ( SvCUR(sv_) == 0 ) {
-      SvCUR_set(sv_, len_);
-    }
-  }
-
-  int64_t ByteCount() const
-  {
-    return (int64_t)SvCUR(sv_);
-  }
-
-private:
-  SV * sv_;
-  STRLEN len_;
-
-  GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(nats_streaming_OutputStream);
-};
-
 
 typedef ::Net::NATS::Streaming::PB::PubMsg __Net__NATS__Streaming__PB__PubMsg;
 typedef ::Net::NATS::Streaming::PB::PubAck __Net__NATS__Streaming__PB__PubAck;
@@ -838,6 +795,9 @@ unpack(svTHIS, arg)
 SV *
 pack(svTHIS)
   SV * svTHIS
+  PREINIT:
+    string output;
+
   CODE:
     ::Net::NATS::Streaming::PB::Ack * THIS;
     if ( sv_derived_from(svTHIS, "Net::NATS::Streaming::PB::Ack") ) {
@@ -847,14 +807,11 @@ pack(svTHIS)
       croak("THIS is not of type Net::NATS::Streaming::PB::Ack");
     }
     if ( THIS != NULL ) {
-      RETVAL = newSVpvn("", 0);
-      nats_streaming_OutputStream os(RETVAL);
       if ( THIS->IsInitialized() ) {
-        if ( THIS->SerializePartialToZeroCopyStream(&os)!= true ) {
-          SvREFCNT_dec(RETVAL);
+        if ( THIS->SerializePartialToString(&output)!= true ) {
           RETVAL = Nullsv;
         } else {
-          os.Sync();
+          RETVAL = newSVpvn(output.c_str(), output.length());
         }
       } else {
         croak("Can't serialize message of type 'Net::NATS::Streaming::PB::Ack' because it is missing required fields: %s",
@@ -1351,6 +1308,9 @@ unpack(svTHIS, arg)
 SV *
 pack(svTHIS)
   SV * svTHIS
+  PREINIT:
+    string output;
+
   CODE:
     ::Net::NATS::Streaming::PB::CloseRequest * THIS;
     if ( sv_derived_from(svTHIS, "Net::NATS::Streaming::PB::CloseRequest") ) {
@@ -1360,14 +1320,11 @@ pack(svTHIS)
       croak("THIS is not of type Net::NATS::Streaming::PB::CloseRequest");
     }
     if ( THIS != NULL ) {
-      RETVAL = newSVpvn("", 0);
-      nats_streaming_OutputStream os(RETVAL);
       if ( THIS->IsInitialized() ) {
-        if ( THIS->SerializePartialToZeroCopyStream(&os)!= true ) {
-          SvREFCNT_dec(RETVAL);
+        if ( THIS->SerializePartialToString(&output)!= true ) {
           RETVAL = Nullsv;
         } else {
-          os.Sync();
+          RETVAL = newSVpvn(output.c_str(), output.length());
         }
       } else {
         croak("Can't serialize message of type 'Net::NATS::Streaming::PB::CloseRequest' because it is missing required fields: %s",
@@ -1776,6 +1733,9 @@ unpack(svTHIS, arg)
 SV *
 pack(svTHIS)
   SV * svTHIS
+  PREINIT:
+    string output;
+
   CODE:
     ::Net::NATS::Streaming::PB::CloseResponse * THIS;
     if ( sv_derived_from(svTHIS, "Net::NATS::Streaming::PB::CloseResponse") ) {
@@ -1785,14 +1745,11 @@ pack(svTHIS)
       croak("THIS is not of type Net::NATS::Streaming::PB::CloseResponse");
     }
     if ( THIS != NULL ) {
-      RETVAL = newSVpvn("", 0);
-      nats_streaming_OutputStream os(RETVAL);
       if ( THIS->IsInitialized() ) {
-        if ( THIS->SerializePartialToZeroCopyStream(&os)!= true ) {
-          SvREFCNT_dec(RETVAL);
+        if ( THIS->SerializePartialToString(&output)!= true ) {
           RETVAL = Nullsv;
         } else {
-          os.Sync();
+          RETVAL = newSVpvn(output.c_str(), output.length());
         }
       } else {
         croak("Can't serialize message of type 'Net::NATS::Streaming::PB::CloseResponse' because it is missing required fields: %s",
@@ -2201,6 +2158,9 @@ unpack(svTHIS, arg)
 SV *
 pack(svTHIS)
   SV * svTHIS
+  PREINIT:
+    string output;
+
   CODE:
     ::Net::NATS::Streaming::PB::ConnectRequest * THIS;
     if ( sv_derived_from(svTHIS, "Net::NATS::Streaming::PB::ConnectRequest") ) {
@@ -2210,14 +2170,11 @@ pack(svTHIS)
       croak("THIS is not of type Net::NATS::Streaming::PB::ConnectRequest");
     }
     if ( THIS != NULL ) {
-      RETVAL = newSVpvn("", 0);
-      nats_streaming_OutputStream os(RETVAL);
       if ( THIS->IsInitialized() ) {
-        if ( THIS->SerializePartialToZeroCopyStream(&os)!= true ) {
-          SvREFCNT_dec(RETVAL);
+        if ( THIS->SerializePartialToString(&output)!= true ) {
           RETVAL = Nullsv;
         } else {
-          os.Sync();
+          RETVAL = newSVpvn(output.c_str(), output.length());
         }
       } else {
         croak("Can't serialize message of type 'Net::NATS::Streaming::PB::ConnectRequest' because it is missing required fields: %s",
@@ -2707,6 +2664,9 @@ unpack(svTHIS, arg)
 SV *
 pack(svTHIS)
   SV * svTHIS
+  PREINIT:
+    string output;
+
   CODE:
     ::Net::NATS::Streaming::PB::ConnectResponse * THIS;
     if ( sv_derived_from(svTHIS, "Net::NATS::Streaming::PB::ConnectResponse") ) {
@@ -2716,14 +2676,11 @@ pack(svTHIS)
       croak("THIS is not of type Net::NATS::Streaming::PB::ConnectResponse");
     }
     if ( THIS != NULL ) {
-      RETVAL = newSVpvn("", 0);
-      nats_streaming_OutputStream os(RETVAL);
       if ( THIS->IsInitialized() ) {
-        if ( THIS->SerializePartialToZeroCopyStream(&os)!= true ) {
-          SvREFCNT_dec(RETVAL);
+        if ( THIS->SerializePartialToString(&output)!= true ) {
           RETVAL = Nullsv;
         } else {
-          os.Sync();
+          RETVAL = newSVpvn(output.c_str(), output.length());
         }
       } else {
         croak("Can't serialize message of type 'Net::NATS::Streaming::PB::ConnectResponse' because it is missing required fields: %s",
@@ -3618,6 +3575,9 @@ unpack(svTHIS, arg)
 SV *
 pack(svTHIS)
   SV * svTHIS
+  PREINIT:
+    string output;
+
   CODE:
     ::Net::NATS::Streaming::PB::MsgProto * THIS;
     if ( sv_derived_from(svTHIS, "Net::NATS::Streaming::PB::MsgProto") ) {
@@ -3627,14 +3587,11 @@ pack(svTHIS)
       croak("THIS is not of type Net::NATS::Streaming::PB::MsgProto");
     }
     if ( THIS != NULL ) {
-      RETVAL = newSVpvn("", 0);
-      nats_streaming_OutputStream os(RETVAL);
       if ( THIS->IsInitialized() ) {
-        if ( THIS->SerializePartialToZeroCopyStream(&os)!= true ) {
-          SvREFCNT_dec(RETVAL);
+        if ( THIS->SerializePartialToString(&output)!= true ) {
           RETVAL = Nullsv;
         } else {
-          os.Sync();
+          RETVAL = newSVpvn(output.c_str(), output.length());
         }
       } else {
         croak("Can't serialize message of type 'Net::NATS::Streaming::PB::MsgProto' because it is missing required fields: %s",
@@ -4517,6 +4474,9 @@ unpack(svTHIS, arg)
 SV *
 pack(svTHIS)
   SV * svTHIS
+  PREINIT:
+    string output;
+
   CODE:
     ::Net::NATS::Streaming::PB::PubAck * THIS;
     if ( sv_derived_from(svTHIS, "Net::NATS::Streaming::PB::PubAck") ) {
@@ -4526,14 +4486,11 @@ pack(svTHIS)
       croak("THIS is not of type Net::NATS::Streaming::PB::PubAck");
     }
     if ( THIS != NULL ) {
-      RETVAL = newSVpvn("", 0);
-      nats_streaming_OutputStream os(RETVAL);
       if ( THIS->IsInitialized() ) {
-        if ( THIS->SerializePartialToZeroCopyStream(&os)!= true ) {
-          SvREFCNT_dec(RETVAL);
+        if ( THIS->SerializePartialToString(&output)!= true ) {
           RETVAL = Nullsv;
         } else {
-          os.Sync();
+          RETVAL = newSVpvn(output.c_str(), output.length());
         }
       } else {
         croak("Can't serialize message of type 'Net::NATS::Streaming::PB::PubAck' because it is missing required fields: %s",
@@ -5023,6 +4980,9 @@ unpack(svTHIS, arg)
 SV *
 pack(svTHIS)
   SV * svTHIS
+  PREINIT:
+    string output;
+
   CODE:
     ::Net::NATS::Streaming::PB::PubMsg * THIS;
     if ( sv_derived_from(svTHIS, "Net::NATS::Streaming::PB::PubMsg") ) {
@@ -5032,14 +4992,11 @@ pack(svTHIS)
       croak("THIS is not of type Net::NATS::Streaming::PB::PubMsg");
     }
     if ( THIS != NULL ) {
-      RETVAL = newSVpvn("", 0);
-      nats_streaming_OutputStream os(RETVAL);
       if ( THIS->IsInitialized() ) {
-        if ( THIS->SerializePartialToZeroCopyStream(&os)!= true ) {
-          SvREFCNT_dec(RETVAL);
+        if ( THIS->SerializePartialToString(&output)!= true ) {
           RETVAL = Nullsv;
         } else {
-          os.Sync();
+          RETVAL = newSVpvn(output.c_str(), output.length());
         }
       } else {
         croak("Can't serialize message of type 'Net::NATS::Streaming::PB::PubMsg' because it is missing required fields: %s",
@@ -5849,6 +5806,9 @@ unpack(svTHIS, arg)
 SV *
 pack(svTHIS)
   SV * svTHIS
+  PREINIT:
+    string output;
+
   CODE:
     ::Net::NATS::Streaming::PB::SubscriptionRequest * THIS;
     if ( sv_derived_from(svTHIS, "Net::NATS::Streaming::PB::SubscriptionRequest") ) {
@@ -5858,14 +5818,11 @@ pack(svTHIS)
       croak("THIS is not of type Net::NATS::Streaming::PB::SubscriptionRequest");
     }
     if ( THIS != NULL ) {
-      RETVAL = newSVpvn("", 0);
-      nats_streaming_OutputStream os(RETVAL);
       if ( THIS->IsInitialized() ) {
-        if ( THIS->SerializePartialToZeroCopyStream(&os)!= true ) {
-          SvREFCNT_dec(RETVAL);
+        if ( THIS->SerializePartialToString(&output)!= true ) {
           RETVAL = Nullsv;
         } else {
-          os.Sync();
+          RETVAL = newSVpvn(output.c_str(), output.length());
         }
       } else {
         croak("Can't serialize message of type 'Net::NATS::Streaming::PB::SubscriptionRequest' because it is missing required fields: %s",
@@ -6987,6 +6944,9 @@ unpack(svTHIS, arg)
 SV *
 pack(svTHIS)
   SV * svTHIS
+  PREINIT:
+    string output;
+
   CODE:
     ::Net::NATS::Streaming::PB::SubscriptionResponse * THIS;
     if ( sv_derived_from(svTHIS, "Net::NATS::Streaming::PB::SubscriptionResponse") ) {
@@ -6996,14 +6956,11 @@ pack(svTHIS)
       croak("THIS is not of type Net::NATS::Streaming::PB::SubscriptionResponse");
     }
     if ( THIS != NULL ) {
-      RETVAL = newSVpvn("", 0);
-      nats_streaming_OutputStream os(RETVAL);
       if ( THIS->IsInitialized() ) {
-        if ( THIS->SerializePartialToZeroCopyStream(&os)!= true ) {
-          SvREFCNT_dec(RETVAL);
+        if ( THIS->SerializePartialToString(&output)!= true ) {
           RETVAL = Nullsv;
         } else {
-          os.Sync();
+          RETVAL = newSVpvn(output.c_str(), output.length());
         }
       } else {
         croak("Can't serialize message of type 'Net::NATS::Streaming::PB::SubscriptionResponse' because it is missing required fields: %s",
@@ -7493,6 +7450,9 @@ unpack(svTHIS, arg)
 SV *
 pack(svTHIS)
   SV * svTHIS
+  PREINIT:
+    string output;
+
   CODE:
     ::Net::NATS::Streaming::PB::UnsubscribeRequest * THIS;
     if ( sv_derived_from(svTHIS, "Net::NATS::Streaming::PB::UnsubscribeRequest") ) {
@@ -7502,14 +7462,11 @@ pack(svTHIS)
       croak("THIS is not of type Net::NATS::Streaming::PB::UnsubscribeRequest");
     }
     if ( THIS != NULL ) {
-      RETVAL = newSVpvn("", 0);
-      nats_streaming_OutputStream os(RETVAL);
       if ( THIS->IsInitialized() ) {
-        if ( THIS->SerializePartialToZeroCopyStream(&os)!= true ) {
-          SvREFCNT_dec(RETVAL);
+        if ( THIS->SerializePartialToString(&output)!= true ) {
           RETVAL = Nullsv;
         } else {
-          os.Sync();
+          RETVAL = newSVpvn(output.c_str(), output.length());
         }
       } else {
         croak("Can't serialize message of type 'Net::NATS::Streaming::PB::UnsubscribeRequest' because it is missing required fields: %s",
