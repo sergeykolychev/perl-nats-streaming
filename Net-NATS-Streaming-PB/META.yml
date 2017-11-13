@@ -1,10 +1,11 @@
 ---
-abstract: 'Perl interface to NATS Streaming Google's Protocol Buffers'
+abstract: "Perl interface to NATS Streaming Google's Protocol Buffers"
 author:
   - 'Sergey Kolychev <sergeykolychev.github@gmail.com>'
-build_requires: {}
+build_requires:
+  ExtUtils::MakeMaker: '0'
 configure_requires:
-  ExtUtils::MakeMaker: '6.30'
+  ExtUtils::MakeMaker: '0'
 dynamic_config: 0
 generated_by: 'ExtUtils::MakeMaker version 7.24, CPAN::Meta::Converter version 2.143240'
 license: apache
@@ -16,6 +17,5 @@ no_index:
   directory:
     - t
     - inc
-requires:
-  Test::More: '0'
-version: '0.03'
+requires: {}
+version: '0.04'
