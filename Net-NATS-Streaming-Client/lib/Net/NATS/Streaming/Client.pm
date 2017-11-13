@@ -228,13 +228,6 @@ sub publish_channel
 sub close_stream
 {
     my $self = shift;
-    for my $sub (keys %pub_ack_handlers)
-    {
-        $pub_ack_handlers{$sub}[0]->unsubscribe;
-        delete $pub_ack_handlers{$sub};
-    }
-    $self->heartbeat_subscription->unsubscribe;
-    $self->heartbeat_subscription(undef);
     my $close_response;
     $self->request(
         $self->connect_response->closeRequests,
@@ -247,6 +240,13 @@ sub close_stream
     {
         last if defined $close_response;
     }
+    for my $sub (keys %pub_ack_handlers)
+    {
+        $pub_ack_handlers{$sub}[0]->unsubscribe;
+        delete $pub_ack_handlers{$sub};
+    }
+    $self->heartbeat_subscription->unsubscribe;
+    $self->heartbeat_subscription(undef);
     return $close_response ? $close_response->error : 'failed to close stream';
 }
 
