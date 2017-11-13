@@ -1,5 +1,7 @@
 Revision history for Perl extension Net::NATS::Streaming::PB
 
+0.03  Mon Nov 13 09:49:26 PST 2017
+        - bugfixes
 0.02  Sun Nov 12 12:07:49 PST 2017
         - fix for new perls
           https://github.com/spiritloose/protobuf-perlxs/commit/dae41b5a2a13e03650d6b09cf162a939391ab2fd

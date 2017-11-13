@@ -17,4 +17,5 @@ no_index:
     - t
     - inc
 requires:
-version: '0.02'
+  Test::More: '0'
+version: '0.03'

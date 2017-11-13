@@ -19,13 +19,13 @@ my %WriteMakefileArgs = (
   "LICENSE" => "apache_2_0",
   "NAME" => "Net::NATS::Streaming::Client",
   "PREREQ_PM" => {
-    "Net::NATS::Streaming::PB" => "0.01",
+    "Net::NATS::Streaming::PB" => "0.03",
     "Net::NATS::Client" => "0.2.0",
-    "OSSP::uuid" => "1.0602",
+    "UUID" => "0.05",
     "Class::XSAccessor" => "1.19"
   },
   "TEST_REQUIRES" => {},
-  "VERSION" => "0.01",
+  "VERSION" => "0.03",
   "test" => {
     "TESTS" => "t/*.t"
   }
@@ -33,9 +33,9 @@ my %WriteMakefileArgs = (
 
 
 my %FallbackPrereqs = (
-    "Net::NATS::Streaming::PB" => "0.01",
+    "Net::NATS::Streaming::PB" => "0.03",
     "Net::NATS::Client" => "0.2.0",
-    "OSSP::uuid" => "1.0602",
+    "UUID" => "0.05",
     "Class::XSAccessor" => "1.19"
 );
 

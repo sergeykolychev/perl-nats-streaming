@@ -21,4 +21,4 @@ requires:
   Net::NATS::Client: '0.2.0'
   UUID: '0.05'
   Class::XSAccessor : '1.19'
-version: '0.02'
+version: '0.03'

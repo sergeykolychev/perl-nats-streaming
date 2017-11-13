@@ -17,7 +17,7 @@ use Class::XSAccessor {
     ],
 };
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 our $CLUSTER_ID = 'test-cluster';
 our $CLUSTER_DISCOVER_SUBJECT = '_STAN.discover';
 our $ACK_WAIT = 30;
