@@ -7,7 +7,7 @@ die "need google protobuf compiler installed" if $!;
 
 WriteMakefile(
     'NAME' => 'Net::NATS::Streaming::PB',
-    'VERSION'  => '0.04',
+    'VERSION'  => '0.05',
     'OPTIMIZE'      => '-O2 -Wall',
     'CC'            => $CC,
     'LD'            => '$(CC)',
