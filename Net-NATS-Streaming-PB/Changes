@@ -1,5 +1,8 @@
 Revision history for Perl extension Net::NATS::Streaming::PB
 
+0.06  Thu Nov 16 21:49:22 PST 2017
+        - fix to get the module compiled on FreeBSD
+          Thanks to Slaven Rezic for the bug report and suggestions.
 0.05  Tue Nov 14 16:58:53 PST 2017
         - fix for new protobuf lib
 0.04  Mon Nov 13 12:26:35 PST 2017

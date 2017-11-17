@@ -21,8 +21,6 @@ extern "C" {
 #ifdef Move
 #undef Move
 #endif
-#include <google/protobuf/stubs/common.h>
-#include <google/protobuf/io/zero_copy_stream.h>
 #include "nats_streaming.pb.h"
 
 using namespace std;
