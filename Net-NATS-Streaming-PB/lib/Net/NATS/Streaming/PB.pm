@@ -2394,3 +2394,14 @@ http://code.google.com/p/protobuf
 
 =cut
 
+=head1 REPOSITORY
+
+L<https://github.com/sergeykolychev/perl-nats-streaming>
+
+=head1 COPYRIGHT & LICENSE
+
+    Copyright (C) 2017 by Sergey Kolychev <sergeykolychev.github@gmail.com>
+
+    This library is licensed under Apache 2.0 license https://www.apache.org/licenses/LICENSE-2.0
+
+=cut
