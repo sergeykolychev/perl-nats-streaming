@@ -4,25 +4,25 @@ Net::NATS::Streaming::Client - A Perl client for the NATS Streaming messaging sy
 
 Basic Usage
 
-This class is a subclass of Net::NATS::Client and delegates all networking
-to the parent.
+    This class is a subclass of Net::NATS::Client and delegates all networking
+    to the parent.
 
-use Net::NATS::Streaming::Client;
+    use Net::NATS::Streaming::Client;
+    
+    $client = Net::NATS::Streaming::Client->new(uri => 'nats://localhost:4222');
+    
+    $client->connect() or die $!;
+    
+    $subscription = $client->subscribe_channel(
+        { subject => 'foo' },
+        sub { warn shift->data }
+    );
 
-$client = Net::NATS::Streaming::Client->new(uri => 'nats://localhost:4222');
+    $client->publish_channel({ subject => 'foo', data => 'Hello, World!'});
 
-$client->connect() or die $!;
+    $client->unsubscribe_channel($subscription);
 
-$subscription = $client->subscribe_channel(
-    { subject => 'foo' },
-    sub { warn shift->data }
-);
-
-$client->publish_channel({ subject => 'foo', data => 'Hello, World!'});
-
-$client->unsubscribe_channel($subscription);
-
-$client->close_stream();
+    $client->close_stream();
 
 SEE ALSO
 
